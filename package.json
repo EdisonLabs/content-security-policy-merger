@@ -1,0 +1,43 @@
+{
+  "name": "content-security-policy-merger",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Merge Content-Security-Policy directives",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx esbuild index.js --platform=node --sourcemap --format=esm --bundle --outfile=./test/dist/index.js; node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "format": "npx prettier --write '**/*.{js,json,md}'",
+    "lint": "npx eslint '**/*.js'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EdisonLabs/content-security-policy-merger.git"
+  },
+  "keywords": [
+    "security",
+    "content",
+    "policy",
+    "csp",
+    "headers"
+  ],
+  "author": "EdisonLabs",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/EdisonLabs/content-security-policy-merger/issues"
+  },
+  "homepage": "https://github.com/EdisonLabs/content-security-policy-merger#readme",
+  "dependencies": {
+    "content-security-policy-parser": "^0.4.1"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.2",
+    "esbuild": "^0.18.4",
+    "eslint": "^8",
+    "eslint-config-standard": "^17",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "prettier": "^2",
+    "jest": "^29.5.0"
+  }
+}

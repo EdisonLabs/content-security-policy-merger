@@ -1,0 +1,25 @@
+name: Testing
+on:
+  push:
+    # This will make the workflow to not trigger on tags.
+    branches:
+      - "*"
+jobs:
+  lint:
+    name: ESList
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install modules
+        run: npm install
+      - name: Run ESLint
+        run: npm run lint && echo 'No linter issues found'
+  test:
+    name: Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install modules
+        run: npm install
+      - name: Run Tests
+        run: npm run test
