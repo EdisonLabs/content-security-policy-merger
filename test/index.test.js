@@ -1,9 +1,20 @@
 import { merge } from './dist/index'
 import parse from 'content-security-policy-parser'
 
-const cspA = "default-src 'self' *.example.com example.com; script-src 'self' 'unsafe-eval' 'unsafe-inline' www.youtube.com; frame-src 'self' players.brightcove.net; img-src 'blob' 'self'; style-src 'unsafe-inline' https:"
-const cspB = "default-src 'self' *.mysite.com mysite.com; script-src 'self' www.google-analytics.com; frame-src 'self' example.com; manifest-src 'self'; style-src 'unsafe-inline'"
-const cspMerged = "default-src 'self' *.example.com *.mysite.com example.com mysite.com; script-src 'self' 'unsafe-eval' 'unsafe-inline' www.google-analytics.com www.youtube.com; frame-src 'self' example.com players.brightcove.net; img-src 'blob' 'self'; style-src 'unsafe-inline' https:; manifest-src 'self'"
+const cspA =
+  "default-src 'self' *.example.com example.com; " +
+  "script-src 'self' 'unsafe-eval' 'unsafe-inline' www.youtube.com; " +
+  "frame-src 'self' players.brightcove.net; img-src 'blob' 'self'; " +
+  "style-src 'unsafe-inline' https:"
+const cspB =
+  "default-src 'self' *.mysite.com mysite.com; " +
+  "script-src 'self' www.google-analytics.com; frame-src 'self' example.com; " +
+  "manifest-src 'self'; style-src 'unsafe-inline'"
+const cspMerged =
+  "default-src 'self' *.example.com *.mysite.com example.com mysite.com; " +
+  "script-src 'self' 'unsafe-eval' 'unsafe-inline' www.google-analytics.com " +
+  "www.youtube.com; frame-src 'self' example.com players.brightcove.net; " +
+  "img-src 'blob' 'self'; style-src 'unsafe-inline' https:; manifest-src 'self'"
 
 test('merge directives when CSP (A) is empty & (B) is string', async () => {
   expect(merge('', cspB)).toBe(cspB)
@@ -32,21 +43,27 @@ test('merge directives when CSP (A) is object & (B) is object', async () => {
 })
 
 test('merge directives when CSP (A) and (B) have duplicated directives', async () => {
-  expect(merge("default-src 'self'", "default-src 'self'")).toBe("default-src 'self'")
+  expect(merge("default-src 'self'", "default-src 'self'")).toBe(
+    "default-src 'self'",
+  )
 })
 
 test('merge directives when CSP (A) has directives not present in (B)', async () => {
-  expect(merge("frame-src 'self'", "default-src 'self'")).toBe("frame-src 'self'; default-src 'self'")
+  expect(merge("frame-src 'self'", "default-src 'self'")).toBe(
+    "frame-src 'self'; default-src 'self'",
+  )
 })
 
 test('merge directives when CSP (A) has NOT directives present in (B)', async () => {
-  expect(merge("default-src 'self'", "frame-src 'self'")).toBe("default-src 'self'; frame-src 'self'")
+  expect(merge("default-src 'self'", "frame-src 'self'")).toBe(
+    "default-src 'self'; frame-src 'self'",
+  )
 })
 
 test('merged directives is not ending with comma', async () => {
   const csp = merge(cspA, cspB)
   expect(csp).toBe(cspMerged)
 
-  const lastChar = csp.slice(-1);
+  const lastChar = csp.slice(-1)
   expect(lastChar).not.toBe(';')
 })

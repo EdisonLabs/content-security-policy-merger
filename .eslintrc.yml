@@ -1,6 +1,7 @@
 env:
   browser: true
   es2021: true
+  "jest/globals": true
 extends:
   - standard
   - prettier
@@ -9,6 +10,7 @@ parserOptions:
   sourceType: module
 plugins:
   - prettier
+  - jest
 rules:
   prettier/prettier:
     - error
