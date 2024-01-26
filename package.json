@@ -27,7 +27,7 @@
   },
   "homepage": "https://github.com/EdisonLabs/content-security-policy-merger#readme",
   "dependencies": {
-    "content-security-policy-parser": "^0.4.1"
+    "content-security-policy-parser": "^0.5.0"
   },
   "devDependencies": {
     "@types/jest": "^29.5.2",
